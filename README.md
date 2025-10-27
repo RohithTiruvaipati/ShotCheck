@@ -1,67 +1,72 @@
-# Shot Check
+# SoloSlate
 
-A small Flask-based web app that lets you upload a PDF shot list and displays each shot as a checklist in the browser.
+SoloSlate is a browser-first assistant for solo filmmakers who need to wrangle shot lists without leaving the camera. Import your CSV, log takes hands-free with voice commands, jot notes, and export clean reports — all offline.
 
-## 🚀 Features
+## Features
 
-- **PDF Upload & Parsing**  
-  Uses PyPDF2 to extract text and split into individual shot descriptions  
-- **Frontend**  
-  Static HTML/CSS/JS served from frontend/  
-- **Shot Checklist**  
-  Displays each parsed shot with a checkbox you can tick off  
+- **CSV import/export** powered by Papa Parse with automatic scene/shot normalisation.
+- **Hands-free voice control** (via the Web Speech API) for new takes, marking good/bad, completing shots, adding notes, and navigating.
+- **Local persistence** with Zustand + `localStorage`, so your data survives refreshes without any backend.
+- **EDL-lite export** to quickly hand off timing notes with ISO timestamps.
+- **Keyboard shortcuts & toasts** to keep track of actions even when the mic is off.
+- **Tailwind-styled interface** optimised for quick scanning and a clean dark workspace.
 
-## 🛠️ Tech Stack
+## Project Structure
 
-- **Backend:** Python 3, Flask, PyPDF2  
-- **Frontend:** HTML5, CSS3, JavaScript  
-- **Deployment-friendly:** Configured for hosting on Render, Replit, PythonAnywhere  
+```
+soloslate/
+  public/
+    sample.csv
+  src/
+    components/
+    hooks/
+    utils/
+    App.tsx
+    main.tsx
+  index.html
+  package.json
+  tailwind.config.js
+```
 
-## 📂 Project Structure
+## Getting Started
 
-shotcheck/  
-├── backend/  
-│   └── main.py       # Flask app + PDF parsing logic  
-├── frontend/         # static files (index.html, style.css, script.js)  
-├── requirements.txt  
-└── README.md         # this file  
+> **Note:** Package installation requires internet access. If you're offline, clone the repo and install dependencies when connected.
 
-## 💻 Installation
+```bash
+cd soloslate
+npm install
+npm run dev
+```
 
-1. Clone the repo  
-   git clone https://github.com/YourUser/shotcheck.git  
-   cd shotcheck  
+Open the Vite dev server (usually <http://localhost:5173>) to use the app.
 
-2. Create & activate a virtual environment  
-   python3 -m venv venv  
-   source venv/bin/activate   # Mac/Linux  
+## Keyboard & Voice Cheatsheet
 
-   On Windows PowerShell:  
-   python -m venv venv  
-   .\venv\Scripts\Activate  
+| Action | Keyboard | Voice |
+| --- | --- | --- |
+| New take | `Enter` | “new take” |
+| Mark good | `G` | “mark good” |
+| Mark bad | `B` | “mark bad” |
+| Add note | `N` | “note boom in frame” |
+| Complete shot | — | “complete shot” / “mark shot three done” |
+| Next/previous shot | `→` / `←` | “next shot” / “previous shot” |
+| Set lens | — | “set lens 35 millimeter” |
+| Set framing | — | “set framing close up” |
 
-3. Install dependencies  
-   pip install -r requirements.txt  
+## 60-Second Demo Script
 
-## ▶️ Usage
+1. Import `sample.csv` from the toolbar.
+2. Click the mic, then say: “new take … mark good … note ‘boom in frame’ … mark shot three done … next shot.”
+3. Watch the take timeline update with timestamps and note badges.
+4. Export CSV and EDL-lite, then open the downloaded files.
+5. Refresh the page to confirm your state persists. Use **Reset** to clear everything when you’re done.
 
-Run the server locally:  
-python backend/main.py  
+## Tech Stack
 
-Then open http://localhost:5001 in your browser.
+- React + TypeScript + Vite
+- Zustand state management with persistence
+- Tailwind CSS for styling
+- Web Speech API for recognition (`webkitSpeechRecognition` fallback)
+- Papa Parse for CSV handling
 
-## 🚢 Deployment
-
-You can deploy this app for free on platforms like Render, Replit, or PythonAnywhere. See the project docs for detailed setup instructions.
-
-## 🤝 Contributing
-
-1. Fork the repository  
-2. Create a feature branch: git checkout -b feature/YourFeature  
-3. Commit your changes: git commit -m "Add YourFeature"  
-4. Push to the branch: git push origin feature/YourFeature  
-5. Open a Pull Request  
-
-## 📝 License
-
-MIT © Your Name
+Enjoy a quieter slate! 🎬
