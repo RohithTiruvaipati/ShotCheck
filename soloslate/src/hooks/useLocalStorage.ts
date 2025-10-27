@@ -5,17 +5,29 @@ export function useStoreHydration() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const persist = useAppStore.persist;
+    const persist = (useAppStore as typeof useAppStore & {
+      persist?: {
+        hasHydrated?: () => boolean;
+        onFinish?: (cb: () => void) => () => void;
+        onHydrate?: (cb: () => void) => () => void;
+      };
+    }).persist;
     if (!persist) {
       setHydrated(true);
       return;
     }
-    const unsub = persist.onFinish(() => setHydrated(true));
-    if (persist.hasHydrated()) {
+    const unsubHydrate = persist.onHydrate?.(() => setHydrated(false));
+    const unsubFinish = persist.onFinish?.(() => setHydrated(true));
+
+    if (persist.hasHydrated?.()) {
+      setHydrated(true);
+    } else if (!persist.onFinish) {
       setHydrated(true);
     }
+
     return () => {
-      unsub();
+      unsubHydrate?.();
+      unsubFinish?.();
     };
   }, []);
 
