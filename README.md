@@ -69,4 +69,5 @@ Open the Vite dev server (usually <http://localhost:5173>) to use the app.
 - Web Speech API for recognition (`webkitSpeechRecognition` fallback)
 - Papa Parse for CSV handling
 
-Enjoy a quieter slate! 🎬
+Enjoy a quieter slate! 
+
